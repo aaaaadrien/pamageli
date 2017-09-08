@@ -1,2 +1,2 @@
 # pamageli
-Package Manager for Gentoo Linux (and Calculate Linux)
+PAckage MAnager for GEntoo LInux (and Calculate Linux)
