@@ -1,0 +1,13 @@
+#! /bin/bash
+
+path=`dirname $0`
+
+for t in gnome-terminal mate-terminal lxterminal xfce4-terminal konsole qterminal xterm
+do
+	which $t
+	if [[ $? -eq "0" ]]
+	then
+		$t -e $path/pamageli
+		exit 0;
+	fi
+done

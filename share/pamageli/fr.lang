@@ -1,0 +1,11 @@
+t[menu]="Bienvenue dans Pamageli !"
+t[i]="Installer des paquets"
+t[r]="Supprimer des paquets"
+t[u]="Mettre à jour des paquets"
+t[s]="Chercher des paquets"
+t[p]="Informations sur les paquets installés"
+t[a]="Fonctions avancées"
+t[q]="Quitter Pamageli"
+t[do]="Que voulez-vous faire ? : "
+
+t[noroot]="Pamageli a besoin des droits root..."

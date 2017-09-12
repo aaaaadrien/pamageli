@@ -19,6 +19,9 @@ DEPEND="app-shells/bash
 RDEPEND="${DEPEND}"
 
 
-src_install() {
-	dobin "${PN}"
-}
+#src_install() {
+#	dobin "bin/${PN}"
+#	dobin "bin/${PN}-launcher-gui"
+#	doicon "share/icons/${PN}"
+#	domenu "share/applications/${PN}"
+#}
