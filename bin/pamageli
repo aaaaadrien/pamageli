@@ -1,0 +1,355 @@
+#! /bin/bash
+
+# Initialisation des variables #
+c=""
+e=""
+pkg=""
+l="$LANG"
+emergeopts="-q --quiet-build=y "
+version="0.9.0"
+declare -A t
+path=`dirname $0`
+# Fin de l'initialisation des variables #
+
+# Fonctions #
+pamageli() {
+
+	# Chargement des textes
+	texts
+
+	# On vérifie si on est root
+	check_root
+
+	# Affichage du menu en boucle
+	while [[ "$c" != "q" ]]
+	do
+		clear
+		echo "${t[menu]}"
+		echo -e "\n"
+		echo "sync - ${t[sync]}"
+		echo "i    - ${t[i]}"
+		echo "r    - ${t[r]}"
+		echo "u    - ${t[u]}"
+		echo "s    - ${t[s]}"
+		echo "     - ${t[p]}"
+		echo "     - ${t[a]}"
+		echo "0    - ${t[0]}"
+		echo -e "\n"
+		echo "q    - ${t[q]}"
+		echo -e "\n"
+		read -p "${t[do]}" c 
+
+		case "$c" in
+
+		sync)
+			pamageli_sync
+			;;
+		i) 
+			pamageli_install
+			;;
+		r)
+			pamageli_remove
+			;;
+		u) 
+			pamageli_update
+			;;
+		s)
+			pamageli_search
+			;;
+		p)
+			pamageli_information_packages
+			;;
+		a)
+			pamageli_advanced_menu
+		   	;;
+		0)
+			pamageli_about
+		   	;;
+		q)
+			exit 0;
+		   	;;
+		*)
+			echo "${t[err]}"
+			sleep 1;
+			;;
+	
+		esac
+
+	done
+}
+
+pamageli_sync() {
+	clear
+	echo "${t[menusync]}"
+	echo -e "\n"
+	eix-sync -q
+	echo -e "\n"
+	read -p "${t[retmenu]}" zz
+}
+
+pamageli_install() {
+	clear
+	echo "${t[menupkgi]}"
+	echo -e "\n"
+	read -p "${t[pkgi]}" pkg
+	echo -e "\n"
+	emerge -q $emergeopts $pkg 
+	echo -e "\n"
+	read -p "${t[retmenu]}" zz
+}
+
+pamageli_remove() {
+	clear
+	echo "${t[menupkgr]}"
+	echo -e "\n"
+	read -p "${t[pkgr]}" pkg
+	echo -e "\n"
+	emerge -C $emergeopts $pkg
+	echo -e "\n"
+	read -p "${t[retmenu]}" zz
+}
+
+pamageli_update() {
+	clear
+	echo "${t[menupkgu]}"
+	echo -e "\n"
+	read -p "${t[pkgu]}" pkg
+	echo -e "\n"
+
+	if [[ -z $pkg ]]
+	then
+		if [[ -e /usr/bin/cl-update ]]
+		then
+			echo "${t[pkgudistcl]}"
+			cl-update -o
+		else
+			echo "${t[pkgudistgentoo]}"
+			emerge -avuDN --with-bdeps=y $emergeopts @world
+			echo "${t[pkgudistgentooinfo]}"
+		fi
+	else
+		emerge -u $emergeopts $pkg
+	fi
+
+	read -p "${t[retmenu]}" zz
+}
+
+pamageli_search() {
+	clear
+	echo "${t[menupkgs]}"
+	echo -e "\n"
+	read -p "${t[pkgs]}" pkg
+	echo -e "\n"
+	eix -c $pkg
+	echo -e "\n"
+	read -p "${t[retmenu]}" zz
+}
+
+pamageli_information_packages() {
+	while [[ "$c" != "q" ]]
+	do
+		clear
+		echo "${t[menupkgp]}"
+		echo -e "\n"
+		echo "b   - ${t[pb]}"
+		echo "u   - ${t[pu]}"
+		echo "f   - ${t[pf]}"
+		echo -e "\n"
+		echo "q   - ${t[aq]}"
+		echo -e "\n"
+		read -p "${t[do]}" c 
+
+		case "$c" in
+
+		b)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		u)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		f)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		q)
+			c=""
+			pamageli
+			;;
+		*)
+			echo ${t[err]]}
+			sleep 1
+			;;
+		esac
+	
+	done
+}
+
+pamageli_advanced_menu() {
+	# Rebuild modules X : x
+	# Rebuild modules kernel : k
+	# clean orphans : o
+	# clean archives : a
+	# perl-cleaner : pl
+	# python modules : py
+	# revdep : rd
+	# rebuild system : rs
+	# rebuild world : rw
+	# rebuild gcc : rg
+	
+	while [[ "$c" != "q" ]]
+	do
+		clear
+		echo "${t[menupkga]}"
+		echo -e "\n"
+		echo "x   - ${t[ax]}"
+		echo "k   - ${t[ak]}"
+		echo "o   - ${t[ao]}"
+		echo "a   - ${t[aa]}"
+		echo "pl  - ${t[apl]}"
+		echo "py  - ${t[apy]}"
+		echo "rd  - ${t[ard]}"
+		echo "rs  - ${t[ars]}"
+		echo "rw  - ${t[arw]}"
+		echo "rg  - ${t[arg]}"
+		echo -e "\n"
+		echo "q   - ${t[aq]}"
+		echo -e "\n"
+		read -p "${t[do]}" c 
+
+		case "$c" in
+
+		x)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		k)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		o)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		a)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		pl)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		py)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		rd)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		rs)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		rw)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		rg)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		q)
+			c=""
+			pamageli
+			;;
+		*)
+			echo ${t[err]]}
+			sleep 1
+			;;
+		esac
+	
+	done
+}
+
+pamageli_about() {
+		clear
+		echo "${t[menu0]}"
+		echo -e "\n"
+		echo -e "${t[0txt]}"
+		echo -e "\n"
+		read -p "${t[retmenu]}" zz
+}
+
+texts() {
+	t[noroot]="Pamageli needs to be run as root..."
+	
+	t[menu]="Welcome to Pamageli !"
+	t[sync]="Update repositories (Portage and Layman)"
+	t[i]="Install packages"
+	t[r]="Remove packages"
+	t[u]="Update packages"
+	t[s]="Search packages"
+	t[p]="Information about installed packages"
+	t[a]="Advanced functions"
+	t[0]="About Pamageli"
+	t[q]="Quit Pamageli"
+	t[do]="What do you want to do ? : "
+
+	t[menusync]="${t[menu]} - ${t[sync]}"
+	
+	t[menupkgi]="${t[menu]} - ${t[i]}"
+	t[pkgi]="Type a name or names of packages to install : "
+
+	t[menupkgr]="${t[menu]} - ${t[r]}"
+	t[pkgr]="Type a name or names of packages to remove them : "
+
+	t[menupkgu]="${t[menu]} - ${t[u]}"
+	t[pkgu]="Type a name or names of packages to update, or leave blank to update distribution : "
+	t[pkgudistcl]="Calculate Linux detected ! Starting cl-update tool !"
+	t[pkgudistgentoo]="Gentoo Linux ! Starting update with emerge"
+	t[pkgudistgentooinfo]="To rebuild modules (kernel, X, PERL, Python), go to Advanced functions."
+
+	t[menupkgs]="${t[menu]} - ${t[s]}"
+	t[pkgs]="Type a name of a package or a part of name : "
+
+	t[menupkgp]="${t[menu]} - ${t[p]}"
+	t[pb]="What package files belong to"
+	t[pu]="Show USE flags, and their description"
+	t[pf]="List all files installed by a package"
+
+	t[menupkga]="${t[menu]} -  ${t[a]}"
+	t[aq]="Return to main menu."
+
+	t[menu0]="${t[menu]} - ${t[?]}"
+	t[0txt]=" Pamageli $version \n PAckage MAnager for GEntoo LInux \n Written by Adrien.D."
+
+	t[retmenu]="Press enter to return to the previous menu."
+	t[err]="Error ! Unknown choice !"
+
+	# Chargement des traductions
+	load_translations
+}
+
+load_translations() {
+	if [[ $l =~ "FR" ]]
+	then
+		source $path/../share/pamageli/fr.lang
+	fi
+}
+
+check_root() {
+	uid=$(id -u)
+	if [[ $uid -ne "0" ]]
+	then
+		echo "${t[noroot]}"
+		su -c "$path/pamageli"
+		exit 2;
+	fi
+}
+
+# Fin Fonctions #
+
+# Execution du script #
+pamageli
