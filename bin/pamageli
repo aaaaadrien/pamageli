@@ -31,8 +31,9 @@ pamageli() {
 		echo "r    - ${t[r]}"
 		echo "u    - ${t[u]}"
 		echo "s    - ${t[s]}"
-		echo "     - ${t[p]}"
-		echo "     - ${t[a]}"
+		echo "     - ${t[p]} (Not implemented yet)"
+		echo "     - ${t[e]} (Not implemented yet)"
+		echo "     - ${t[a]} (Not implemented yet)"
 		echo "0    - ${t[0]}"
 		echo -e "\n"
 		echo "q    - ${t[q]}"
@@ -59,6 +60,9 @@ pamageli() {
 		p)
 			pamageli_information_packages
 			;;
+		e)
+			pamageli_edit_files
+		   	;;
 		a)
 			pamageli_advanced_menu
 		   	;;
@@ -186,6 +190,48 @@ pamageli_information_packages() {
 	done
 }
 
+pamageli_edit_files() {
+	# $EDITOR
+	while [[ "$c" != "q" ]]
+	do
+		clear
+		echo "${t[menupkge]}"
+		echo -e "\n"
+		echo "k   - ${t[ek]}"
+		echo "u   - ${t[eu]}"
+		echo "m   - ${t[em]}"
+		echo -e "\n"
+		echo "q   - ${t[eq]}"
+		echo -e "\n"
+		read -p "${t[do]}" c 
+
+		case "$c" in
+
+		k)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		u)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		m)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
+		q)
+			c=""
+			pamageli
+			;;
+		*)
+			echo ${t[err]]}
+			sleep 1
+			;;
+		esac
+	
+	done
+}
+
 pamageli_advanced_menu() {
 	# Rebuild modules X : x
 	# Rebuild modules kernel : k
@@ -292,6 +338,7 @@ texts() {
 	t[u]="Update packages"
 	t[s]="Search packages"
 	t[p]="Information about installed packages"
+	t[e]="Edit packages.X files"
 	t[a]="Advanced functions"
 	t[0]="About Pamageli"
 	t[q]="Quit Pamageli"
@@ -318,6 +365,12 @@ texts() {
 	t[pb]="What package files belong to"
 	t[pu]="Show USE flags, and their description"
 	t[pf]="List all files installed by a package"
+
+	t[menupkge]="${t[menu]} -  ${t[e]}"
+	t[ek]="What package files belong to"
+	t[eu]="Show USE flags, and their description"
+	t[em]="List all files installed by a package"
+	t[eq]="Return to main menu."
 
 	t[menupkga]="${t[menu]} -  ${t[a]}"
 	t[aq]="Return to main menu."
