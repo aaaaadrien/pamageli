@@ -6,7 +6,7 @@ e=""
 pkg=""
 l="$LANG"
 emergeopts="-q --quiet-build=y "
-version="0.9.0"
+version="0.9.1"
 declare -A t
 path=`dirname $0`
 # Fin de l'initialisation des variables #
@@ -34,6 +34,7 @@ pamageli() {
 		echo "     - ${t[p]} (Not implemented yet)"
 		echo "     - ${t[e]} (Not implemented yet)"
 		echo "     - ${t[a]} (Not implemented yet)"
+		echo "     - ${t[c]} (Not implemented yet)"
 		echo "0    - ${t[0]}"
 		echo -e "\n"
 		echo "q    - ${t[q]}"
@@ -66,6 +67,9 @@ pamageli() {
 		a)
 			pamageli_advanced_menu
 		   	;;
+		c)
+			pamageli_configuration
+		   	;;
 		0)
 			pamageli_about
 		   	;;
@@ -96,10 +100,13 @@ pamageli_install() {
 	echo "${t[menupkgi]}"
 	echo -e "\n"
 	read -p "${t[pkgi]}" pkg
-	echo -e "\n"
-	emerge -q $emergeopts $pkg 
-	echo -e "\n"
-	read -p "${t[retmenu]}" zz
+	while [[ "$pkg" != "" ]]
+	do
+		echo -e "\n"
+		emerge -av $emergeopts $pkg 
+		echo -e "\n"
+		read -p "${t[pkgi]}" pkg
+	done
 }
 
 pamageli_remove() {
@@ -107,10 +114,13 @@ pamageli_remove() {
 	echo "${t[menupkgr]}"
 	echo -e "\n"
 	read -p "${t[pkgr]}" pkg
-	echo -e "\n"
-	emerge -C $emergeopts $pkg
-	echo -e "\n"
-	read -p "${t[retmenu]}" zz
+	while [[ "$pkg" != "" ]]
+	do
+		echo -e "\n"
+		emerge -aC $emergeopts $pkg
+		echo -e "\n"
+		read -p "${t[pkgr]}" pkg
+	done
 }
 
 pamageli_update() {
@@ -143,10 +153,13 @@ pamageli_search() {
 	echo "${t[menupkgs]}"
 	echo -e "\n"
 	read -p "${t[pkgs]}" pkg
-	echo -e "\n"
-	eix -c $pkg
-	echo -e "\n"
-	read -p "${t[retmenu]}" zz
+	while [[ "$pkg" != "" ]]
+	do
+		echo -e "\n"
+		eix -c $pkg
+		echo -e "\n"
+		read -p "${t[pkgs]}" pkg
+	done
 }
 
 pamageli_information_packages() {
@@ -319,6 +332,15 @@ pamageli_advanced_menu() {
 	done
 }
 
+pamageli_configuration() {
+		clear
+		echo "${t[menuc]}"
+		echo -e "\n"
+		echo "Not implemented yet"
+		echo -e "\n"
+		read -p "${t[retmenu]}" zz
+}
+
 pamageli_about() {
 		clear
 		echo "${t[menu0]}"
@@ -340,6 +362,7 @@ texts() {
 	t[p]="Information about installed packages"
 	t[e]="Edit packages.X files"
 	t[a]="Advanced functions"
+	t[c]="Configure Pamageli options"
 	t[0]="About Pamageli"
 	t[q]="Quit Pamageli"
 	t[do]="What do you want to do ? : "
@@ -347,10 +370,10 @@ texts() {
 	t[menusync]="${t[menu]} - ${t[sync]}"
 	
 	t[menupkgi]="${t[menu]} - ${t[i]}"
-	t[pkgi]="Type a name or names of packages to install : "
+	t[pkgi]="Type name(s) of packages to install (blank = return to main menu) : "
 
 	t[menupkgr]="${t[menu]} - ${t[r]}"
-	t[pkgr]="Type a name or names of packages to remove them : "
+	t[pkgr]="Type name(s) of packages to remove (blank = return to main menu) : "
 
 	t[menupkgu]="${t[menu]} - ${t[u]}"
 	t[pkgu]="Type a name or names of packages to update, or leave blank to update distribution : "
@@ -359,7 +382,7 @@ texts() {
 	t[pkgudistgentooinfo]="To rebuild modules (kernel, X, PERL, Python), go to Advanced functions."
 
 	t[menupkgs]="${t[menu]} - ${t[s]}"
-	t[pkgs]="Type a name of a package or a part of name : "
+	t[pkgs]="Search a package (blank = return to main menu) : "
 
 	t[menupkgp]="${t[menu]} - ${t[p]}"
 	t[pb]="What package files belong to"
@@ -374,6 +397,8 @@ texts() {
 
 	t[menupkga]="${t[menu]} -  ${t[a]}"
 	t[aq]="Return to main menu."
+	
+	t[menuc]="${t[menu]} -  ${t[c]}"
 
 	t[menu0]="${t[menu]} - ${t[?]}"
 	t[0txt]=" Pamageli $version \n PAckage MAnager for GEntoo LInux \n Written by Adrien.D."
