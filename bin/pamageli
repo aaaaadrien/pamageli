@@ -31,10 +31,10 @@ pamageli() {
 		echo "r    - ${t[r]}"
 		echo "u    - ${t[u]}"
 		echo "s    - ${t[s]}"
-		echo "     - ${t[p]} (Not implemented yet)"
-		echo "     - ${t[e]} (Not implemented yet)"
+		#echo "     - ${t[p]} (Not implemented yet)"
+		#echo "     - ${t[e]} (Not implemented yet)"
 		echo "a    - ${t[a]}"
-		echo "     - ${t[c]} (Not implemented yet)"
+		#echo "     - ${t[c]} (Not implemented yet)"
 		echo "0    - ${t[0]}"
 		echo -e "\n"
 		echo "q    - ${t[q]}"
@@ -246,17 +246,6 @@ pamageli_edit_files() {
 }
 
 pamageli_advanced_menu() {
-	# Rebuild modules X : x
-	# Rebuild modules kernel : k
-	# clean orphans : o
-	# clean archives : a
-	# perl-cleaner : pl
-	# python modules : py
-	# revdep : rd
-	# rebuild system : rs
-	# rebuild world : rw
-	# rebuild gcc : rg
-	
 	while [[ "$c" != "q" ]]
 	do
 		clear

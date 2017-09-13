@@ -1,11 +1,53 @@
+t[noroot]="Pamageli a besoin des droits root..."
+
 t[menu]="Bienvenue dans Pamageli !"
+t[sync]="Mettre à jour les dépôts (Portage et Layman)"
 t[i]="Installer des paquets"
 t[r]="Supprimer des paquets"
 t[u]="Mettre à jour des paquets"
 t[s]="Chercher des paquets"
-t[p]="Informations sur les paquets installés"
+t[p]="Information sur les paquets installés"
+t[e]="Editer les fichiers packages.X"
 t[a]="Fonctions avancées"
+t[c]="Configurer les options de Pamageli"
+t[0]="À propos de Pamageli"
 t[q]="Quitter Pamageli"
 t[do]="Que voulez-vous faire ? : "
 
-t[noroot]="Pamageli a besoin des droits root..."
+t[menusync]="${t[menu]} - ${t[sync]}"
+
+t[menupkgi]="${t[menu]} - ${t[i]}"
+t[pkgi]="Saisir le(s) nom(s) des paquets à installer (vide = revenir au menu précédent) : "
+
+t[menupkgr]="${t[menu]} - ${t[r]}"
+t[pkgr]="Saisir le(s) nom(s) des paquets à supprimer (vide = revenir au menu précédent) : "
+
+t[menupkgu]="${t[menu]} - ${t[u]}"
+t[pkgu]="Saisir le(s) nom(s) des paquets à mettre à jour (vide = MàJ distribution) : "
+t[pkgudistcl]="Calculate Linux détecté ! Démarrage de cl-update !"
+t[pkgudistgentoo]="Gentoo Linux ! Démarrage de la mise à jour avec emerge"
+t[pkgudistgentooinfo]="Pour recompiler les modules (kernel, X, PERL, Python), aller dans Fonctions avancées."
+
+t[menupkgs]="${t[menu]} - ${t[s]}"
+t[pkgs]="Saisir le(s) nom(s) des paquets à rechercher (vide = revenir au menu précédent) : "
+
+t[menupkga]="${t[menu]} -  ${t[a]}"
+t[ax]="Recompiler les modules X11"
+t[ak]="Recompiler les modules kernel"
+t[ao]="Nettoyer les paquets orphelins"
+t[aa]="Nettoyer les archives téléchargées"
+t[apl]="Recompiler les modules PERL"
+t[apy]="Recompiler les modules Python"
+t[ard]="Recompiler les dépendances inverses cassées"
+t[ars]="Recompiler la base du système"
+t[arw]="Recompiler tous les paquets"
+t[arg]="Recompiler les paquets qui utilisent GCC"
+t[aq]="Revenir au menu principal."
+
+t[menuc]="${t[menu]} -  ${t[c]}"
+
+t[menu0]="${t[menu]} - ${t[?]}"
+t[0txt]=" Pamageli $version \n PAckage MAnager for GEntoo LInux \n Ecrit par Adrien.D."
+
+t[retmenu]="Appuyer sur Entrée pour revenir au menu précédent."
+t[err]="Erreur ! Choix inconnu !"
