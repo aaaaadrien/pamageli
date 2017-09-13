@@ -33,7 +33,7 @@ pamageli() {
 		echo "s    - ${t[s]}"
 		echo "     - ${t[p]} (Not implemented yet)"
 		echo "     - ${t[e]} (Not implemented yet)"
-		echo "     - ${t[a]} (Not implemented yet)"
+		echo "a    - ${t[a]}"
 		echo "     - ${t[c]} (Not implemented yet)"
 		echo "0    - ${t[0]}"
 		echo -e "\n"
@@ -280,44 +280,35 @@ pamageli_advanced_menu() {
 		case "$c" in
 
 		x)
-			echo "Not implemented yet !"
-			sleep 1
+			emerge -q @x11-module-rebuild
 			;;
 		k)
-			echo "Not implemented yet !"
-			sleep 1
+			emerge -q @x11-module-rebuild
 			;;
 		o)
-			echo "Not implemented yet !"
-			sleep 1
+			emerge -ac
 			;;
 		a)
-			echo "Not implemented yet !"
-			sleep 1
+			eclean-dist
+			eclean-pkg
 			;;
 		pl)
-			echo "Not implemented yet !"
-			sleep 1
+			perl-cleaner --all
 			;;
 		py)
-			echo "Not implemented yet !"
-			sleep 1
+			python-updater
 			;;
 		rd)
-			echo "Not implemented yet !"
-			sleep 1
+			revdep-rebuild -iq
 			;;
 		rs)
-			echo "Not implemented yet !"
-			sleep 1
+			emerge -eq @system
 			;;
 		rw)
-			echo "Not implemented yet !"
-			sleep 1
+			emerge -eq @world
 			;;
 		rg)
-			echo "Not implemented yet !"
-			sleep 1
+			revdep-rebuild --library 'libstdc++.so.6' -- --exclude gcc
 			;;
 		q)
 			c=""
@@ -396,6 +387,16 @@ texts() {
 	t[eq]="Return to main menu."
 
 	t[menupkga]="${t[menu]} -  ${t[a]}"
+	t[ax]="Rebuild X11 modules"
+	t[ak]="Rebuild kernel modules"
+	t[ao]="Clean orphans"
+	t[aa]="Clean downloaded archives"
+	t[apl]="Rebuild PERL modules"
+	t[apy]="Rebuild Python modules"
+	t[ard]="Rebuild reverse dependancies broken"
+	t[ars]="Rebuild the base of system"
+	t[arw]="Rebuild all packages"
+	t[arg]="Rebuild packages which uses gcc"
 	t[aq]="Return to main menu."
 	
 	t[menuc]="${t[menu]} -  ${t[c]}"
