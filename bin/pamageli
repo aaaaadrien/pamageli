@@ -390,7 +390,7 @@ texts() {
 	
 	t[menuc]="${t[menu]} -  ${t[c]}"
 
-	t[menu0]="${t[menu]} - ${t[?]}"
+	t[menu0]="${t[menu]} - ${t[0]}"
 	t[0txt]=" Pamageli $version \n PAckage MAnager for GEntoo LInux \n Written by Adrien.D."
 
 	t[retmenu]="Press enter to return to the previous menu."
@@ -413,7 +413,7 @@ check_root() {
 	then
 		echo "${t[noroot]}"
 		su -c "$path/pamageli"
-		exit 2;
+		exit 0;
 	fi
 }
 
