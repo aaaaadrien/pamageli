@@ -269,41 +269,31 @@ pamageli_advanced_menu() {
 		case "$c" in
 
 		x)
-			emerge -q @x11-module-rebuild
-			read -p "${t[retmenu]}" zz
+			pamageli_advanced_x11
 			;;
 		k)
-			emerge -q @x11-module-rebuild
-			read -p "${t[retmenu]}" zz
+			pamageli_advanced_kernel
 			;;
 		o)
-			emerge -ac
-			read -p "${t[retmenu]}" zz
+			pamageli_advanced_orphans
 			;;
 		a)
-			eclean-dist -q
-			eclean-pkg -q
-			read -p "${t[retmenu]}" zz
+			pamageli_advanced_archives
 			;;
 		pl)
-			perl-cleaner --all
-			read -p "${t[retmenu]}" zz
+			pamageli_advanced_perl
 			;;
 		py)
-			python-updater
-			read -p "${t[retmenu]}" zz
+			pamageli_advanced_python
 			;;
 		rd)
-			revdep-rebuild -iq
-			read -p "${t[retmenu]}" zz
+			pamageli_advanced_revdep
 			;;
 		rs)
-			emerge -eq @system
-			read -p "${t[retmenu]}" zz
+			pamageli_advanced_rebuild_system
 			;;
 		rw)
-			emerge -eq @world
-			read -p "${t[retmenu]}" zz
+			pamageli_advanced_rebuild_world
 			;;
 		rg)
 			revdep-rebuild --library 'libstdc++.so.6' -- --exclude gcc
@@ -314,7 +304,7 @@ pamageli_advanced_menu() {
 			pamageli
 			;;
 		*)
-			echo ${t[err]]}
+			echo ${t[err]}
 			sleep 1
 			;;
 		esac
@@ -322,22 +312,107 @@ pamageli_advanced_menu() {
 	done
 }
 
+pamageli_advanced_x11() {
+	clear
+	echo ${t[menuax]}
+	echo -e "\n"
+	emerge -q @x11-module-rebuild
+	echo -e "\n"
+	read -p "${t[retmenu]}" zz
+}
+
+pamageli_advanced_kernel() {
+        clear
+        echo ${t[menuak]}
+        echo -e "\n"
+        emerge -q @module-rebuild
+        echo -e "\n"
+        read -p "${t[retmenu]}" zz
+}
+
+pamageli_advanced_orphans() {
+	clear
+	echo ${t[menuao]}
+	echo -e "\n"
+	emerge -ac
+	echo -e "\n"
+	read -p "${t[retmenu]}" zz
+}
+
+pamageli_advanced_archives() {
+	clear
+	echo ${t[menuaa]}
+	echo -e "\n"
+	echo ${t[aad]}
+	eclean-dist -q
+	echo -e "\n"
+	echo ${t[aap]}
+	eclean-pkg -q
+	echo -e "\n"
+	read -p "${t[retmenu]}" zz
+}
+
+pamageli_advanced_perl(){
+	clear
+	echo ${t[menuapl]}
+	echo -e "\n"
+	perl-cleaner --all
+	echo -e "\n"
+	read -p "${t[retmenu]}" zz
+}
+
+pamageli_advanced_python(){
+	clear
+	echo ${t[menuapy]}
+	echo -e "\n"
+	python-updater
+	echo -e "\n"
+	read -p "${t[retmenu]}" zz
+}
+
+pamageli_advanced_revdep() {
+	clear
+	echo ${t[menuard]}
+	echo -e "\n"
+	emerge -q @preserved-rebuild
+	echo -e "\n"
+	read -p "${t[retmenu]}" zz
+}
+
+pamageli_advanced_rebuild_system() {
+	clear
+	echo ${t[menuars]}
+	echo -e "\n"
+	emerge -eq @system
+	echo -e "\n"
+	read -p "${t[retmenu]}" zz
+}
+
+pamageli_advanced_rebuild_world() {
+	clear
+	echo ${t[menuarw]}
+	echo -e "\n"
+	emerge -eq @world
+	echo -e "\n"
+	read -p "${t[retmenu]}" zz
+}
+
 pamageli_configuration() {
-		clear
-		echo "${t[menuc]}"
-		echo -e "\n"
-		echo "Not implemented yet"
-		echo -e "\n"
-		read -p "${t[retmenu]}" zz
+	clear
+	echo "${t[menuc]}"
+	echo -e "\n"
+	echo "Not implemented yet"
+	echo -e "\n"
+	read -p "${t[retmenu]}" zz
 }
 
 pamageli_about() {
-		clear
-		echo "${t[menu0]}"
-		echo -e "\n"
-		echo -e "${t[0txt]}"
-		echo -e "\n"
-		read -p "${t[retmenu]}" zz
+	clear
+	echo "${t[menu0]}"
+	echo -e "\n"
+	echo -e "${t[0txt]}"
+	echo -e "\n"
+	read -p "${t[retmenu]}" zz
 }
 
 texts() {
@@ -395,9 +470,23 @@ texts() {
 	t[ard]="Rebuild reverse dependancies broken"
 	t[ars]="Rebuild the base of system"
 	t[arw]="Rebuild all packages"
-	t[arg]="Rebuild packages which uses gcc"
+	t[arg]="Rebuild packages which uses gcc lib"
 	t[aq]="Return to main menu."
+
+	t[menuak]="${t[menu]} -  ${t[ak]}"
+
+	t[menuao]="${t[menu]} -  ${t[ao]}"
 	
+	t[menuaa]="${t[menu]} -  ${t[aa]}"
+	t[aad]="Cleaning distfiles..."
+	t[aap]="Cleaning packages archives..."
+
+	t[menuapl]="${t[menu]} -  ${t[apl]}"
+	t[menuapy]="${t[menu]} -  ${t[apy]}"
+	t[menuard]="${t[menu]} -  ${t[ard]}"
+	t[menuars]="${t[menu]} -  ${t[ars]}"
+	t[menuarw]="${t[menu]} -  ${t[arw]}"
+
 	t[menuc]="${t[menu]} -  ${t[c]}"
 
 	t[menu0]="${t[menu]} - ${t[0]}"

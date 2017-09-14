@@ -41,7 +41,7 @@ t[apy]="Recompiler les modules Python"
 t[ard]="Recompiler les dépendances inverses cassées"
 t[ars]="Recompiler la base du système"
 t[arw]="Recompiler tous les paquets"
-t[arg]="Recompiler les paquets qui utilisent GCC"
+t[arg]="Recompiler les paquets qui utilisent des bibliothèques GCC"
 t[aq]="Revenir au menu principal."
 
 t[menuc]="${t[menu]} -  ${t[c]}"
