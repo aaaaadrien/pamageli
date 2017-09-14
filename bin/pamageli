@@ -270,34 +270,44 @@ pamageli_advanced_menu() {
 
 		x)
 			emerge -q @x11-module-rebuild
+			read -p "${t[retmenu]}" zz
 			;;
 		k)
 			emerge -q @x11-module-rebuild
+			read -p "${t[retmenu]}" zz
 			;;
 		o)
 			emerge -ac
+			read -p "${t[retmenu]}" zz
 			;;
 		a)
-			eclean-dist
-			eclean-pkg
+			eclean-dist -q
+			eclean-pkg -q
+			read -p "${t[retmenu]}" zz
 			;;
 		pl)
 			perl-cleaner --all
+			read -p "${t[retmenu]}" zz
 			;;
 		py)
 			python-updater
+			read -p "${t[retmenu]}" zz
 			;;
 		rd)
 			revdep-rebuild -iq
+			read -p "${t[retmenu]}" zz
 			;;
 		rs)
 			emerge -eq @system
+			read -p "${t[retmenu]}" zz
 			;;
 		rw)
 			emerge -eq @world
+			read -p "${t[retmenu]}" zz
 			;;
 		rg)
 			revdep-rebuild --library 'libstdc++.so.6' -- --exclude gcc
+			read -p "${t[retmenu]}" zz
 			;;
 		q)
 			c=""
