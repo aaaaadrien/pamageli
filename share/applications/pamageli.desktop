@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Pamageli
-Comment=Package Manager for Gntoo Linux (and Calculate Linux)
+Comment=Package Manager for Gentoo Linux (and Calculate Linux)
 Exec=pamageli-launcher-gui
 Icon=pamageli
 Terminal=false
