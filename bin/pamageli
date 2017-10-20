@@ -344,10 +344,10 @@ pamageli_advanced_archives() {
 	echo ${t[menuaa]}
 	echo -e "\n"
 	echo ${t[aad]}
-	eclean-dist -q
+	eclean-dist -id #i pour demander
 	echo -e "\n"
 	echo ${t[aap]}
-	eclean-pkg -q
+	eclean-pkg -id #i pour demander
 	echo -e "\n"
 	read -p "${t[retmenu]}" zz
 }
