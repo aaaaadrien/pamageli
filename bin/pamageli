@@ -1,6 +1,7 @@
 #! /bin/bash
 
 # Initialisation des variables #
+arg="$1"
 c=""
 e=""
 pkg=""
@@ -13,12 +14,22 @@ path=`dirname $0`
 
 # Fonctions #
 pamageli() {
-
 	# Chargement des textes
 	texts
 
 	# On vérifie si on est root
 	check_root
+	# Aller a une fonction si argument
+	case "$arg" in
+	u)
+		pamageli_update
+		arg=""
+		;;
+	*)
+		echo "${t[starting]}"
+		;;
+	esac
+		
 
 	# Affichage du menu en boucle
 	while [[ "$c" != "q" ]]
@@ -124,6 +135,7 @@ pamageli_remove() {
 }
 
 pamageli_update() {
+	check_root
 	clear
 	echo "${t[menupkgu]}"
 	echo -e "\n"
@@ -418,6 +430,7 @@ pamageli_about() {
 texts() {
 	t[noroot]="Pamageli needs to be run as root..."
 	
+	t[starting]="Starting Pamageli..."
 	t[menu]="Welcome to Pamageli !"
 	t[sync]="Update repositories (Portage and Layman)"
 	t[i]="Install packages"
@@ -511,7 +524,7 @@ check_root() {
 	if [[ $uid -ne "0" ]]
 	then
 		echo "${t[noroot]}"
-		su -c "$path/pamageli"
+		su -c "$path/pamageli $arg"
 		exit 0;
 	fi
 }
@@ -519,4 +532,5 @@ check_root() {
 # Fin Fonctions #
 
 # Execution du script #
+	
 pamageli
