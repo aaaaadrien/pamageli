@@ -17,12 +17,29 @@ pamageli() {
 	# Chargement des textes
 	texts
 
-	# On vérifie si on est root
-	check_root
+	# On vérifie si on est root (A désactiver prochainement)
+	#check_root
+	
 	# Aller a une fonction si argument
 	case "$arg" in
+	sync)
+		pamageli_sync
+		arg=""
+		;;
+	i)
+		pamageli_install
+		arg=""
+		;;
+	r)
+		pamageli_remove
+		arg=""
+		;;
 	u)
 		pamageli_update
+		arg=""
+		;;
+	a)
+		pamageli_advanced_menu
 		arg=""
 		;;
 	*)
@@ -98,6 +115,7 @@ pamageli() {
 }
 
 pamageli_sync() {
+	check_root sync
 	clear
 	echo "${t[menusync]}"
 	echo -e "\n"
@@ -107,6 +125,7 @@ pamageli_sync() {
 }
 
 pamageli_install() {
+	check_root i
 	clear
 	echo "${t[menupkgi]}"
 	echo -e "\n"
@@ -121,6 +140,7 @@ pamageli_install() {
 }
 
 pamageli_remove() {
+	check_root r
 	clear
 	echo "${t[menupkgr]}"
 	echo -e "\n"
@@ -135,7 +155,7 @@ pamageli_remove() {
 }
 
 pamageli_update() {
-	check_root
+	check_root u
 	clear
 	echo "${t[menupkgu]}"
 	echo -e "\n"
@@ -258,6 +278,7 @@ pamageli_edit_files() {
 }
 
 pamageli_advanced_menu() {
+	check_root a
 	while [[ "$c" != "q" ]]
 	do
 		clear
@@ -521,6 +542,7 @@ load_translations() {
 
 check_root() {
 	uid=$(id -u)
+	arg=$1
 	if [[ $uid -ne "0" ]]
 	then
 		echo "${t[noroot]}"
