@@ -19,7 +19,7 @@ pamageli() {
 	# Chargement des textes
 	texts
 
-	# On vérifie si on est root (A désactiver prochainement)
+	# On vérifie si on est root (A désactiver)
 	#check_root
 	
 	# Aller a une fonction si argument
@@ -171,9 +171,11 @@ pamageli_update() {
 			echo "${t[pkgudistcl]}"
 			cl-update -o
 		else
-			echo "${t[pkgudistgentoo]}"
-			emerge -avuDN --with-bdeps=y $emergeopts @world
-			echo "${t[pkgudistgentooinfo]}"
+			# ask to sync before ?
+			#eix-sync -q
+				echo "${t[pkgudistgentoo]}"
+				emerge -avuDN --with-bdeps=y $emergeopts @world
+				echo "${t[pkgudistgentooinfo]}"
 		fi
 	else
 		emerge -u $emergeopts $pkg
