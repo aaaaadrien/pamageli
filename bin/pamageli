@@ -49,7 +49,7 @@ pamageli() {
 		;;
 	esac
 		
-
+	
 	# Affichage du menu en boucle
 	while [[ "$c" != "q" ]]
 	do
@@ -61,7 +61,7 @@ pamageli() {
 		echo "r    - ${t[r]}"
 		echo "u    - ${t[u]}"
 		echo "s    - ${t[s]}"
-		#echo "     - ${t[p]} (Not implemented yet)"
+		echo "p    - ${t[p]}"
 		#echo "     - ${t[e]} (Not implemented yet)"
 		echo "a    - ${t[a]}"
 		#echo "     - ${t[c]} (Not implemented yet)"
@@ -70,6 +70,21 @@ pamageli() {
 		echo "q    - ${t[q]}"
 		echo -e "\n"
 		read -p "${t[do]}" c 
+
+		#exec 3>&1;
+		#c=$(dialog --colors --title "${t[menu]}" --nocancel --ok-button "OK" --menu "" 0 0 0 \
+		#	"sync" "${t[sync]}" \
+		#	"i" "${t[i]}" \
+		#	"r" "${t[r]}" \
+		#	"u" "${t[u]}" \
+		#	"s" "${t[s]}" \
+		#	"p" "${t[p]}" \
+		#	"e" "${t[e]}" \
+		#	"a" "${t[a]}" \
+		#	"c" "${t[c]}" \
+		#	"0" "${t[0]}" \
+		#	"q" "${t[q]}" \
+		#  2>&1 1>&3 )
 
 		case "$c" in
 
@@ -172,10 +187,15 @@ pamageli_update() {
 			cl-update -o
 		else
 			# ask to sync before ?
-			#eix-sync -q
+			read -p "${t[pkgusync]} (y/N)" wantsync
+			if [[ $wantsync =~ ^([yY][eE][sS]|[yY])$ ]]
+			then
+				eix-sync -q
+			else
 				echo "${t[pkgudistgentoo]}"
 				emerge -avuDN --with-bdeps=y $emergeopts @world
 				echo "${t[pkgudistgentooinfo]}"
+			fi
 		fi
 	else
 		emerge -u $emergeopts $pkg
@@ -215,16 +235,13 @@ pamageli_information_packages() {
 		case "$c" in
 
 		b)
-			echo "Not implemented yet !"
-			sleep 1
+			pamageli_information_packages_belong
 			;;
 		u)
-			echo "Not implemented yet !"
-			sleep 1
+			pamageli_information_packages_use
 			;;
 		f)
-			echo "Not implemented yet !"
-			sleep 1
+			pamageli_information_packages_files
 			;;
 		q)
 			c=""
@@ -238,6 +255,55 @@ pamageli_information_packages() {
 	
 	done
 }
+
+pamageli_information_packages_belong() {
+	clear
+	echo "${t[menupkgpb]}"
+	echo -e "\n"
+	read -p "${t[pkgpb]}" file
+	while [[ "$file" != "" ]]
+	do
+		echo -e "\n"
+		file=$(which $file)
+		if [[ $? -eq 0 ]]
+		then
+			equery b $file
+		else
+			echo "${t[pkgpberr]}"
+		fi
+		echo -e "\n"
+		read -p "${t[pkgpb]}" file
+	done
+}
+
+pamageli_information_packages_use() {
+        clear
+        echo "${t[menupkgpu]}"
+        echo -e "\n"
+        read -p "${t[pkgpu]}" pkg
+        while [[ "$pkg" != "" ]]
+        do
+                echo -e "\n"
+                equery u $pkg
+                echo -e "\n"
+                read -p "${t[pkgpu]}" pkg
+        done
+}
+
+pamageli_information_packages_files() {
+        clear
+        echo "${t[menupkgpf]}"
+        echo -e "\n"
+        read -p "${t[pkgpf]}" pkg
+        while [[ "$pkg" != "" ]]
+        do
+                echo -e "\n"
+                equery f $pkg
+                echo -e "\n"
+                read -p "${t[pkgpf]}" pkg
+        done
+}
+
 
 pamageli_edit_files() {
 	# $EDITOR
@@ -283,7 +349,8 @@ pamageli_edit_files() {
 
 pamageli_advanced_menu() {
 	check_root a
-	while [[ "$c" != "q" ]]
+	ca=""
+	while [[ "$ca" != "q" ]]
 	do
 		clear
 		echo "${t[menupkga]}"
@@ -301,9 +368,9 @@ pamageli_advanced_menu() {
 		echo -e "\n"
 		echo "q   - ${t[aq]}"
 		echo -e "\n"
-		read -p "${t[do]}" c 
+		read -p "${t[do]}" ca 
 
-		case "$c" in
+		case "$ca" in
 
 		x)
 			pamageli_advanced_x11
@@ -337,15 +404,14 @@ pamageli_advanced_menu() {
 			read -p "${t[retmenu]}" zz
 			;;
 		q)
-			c=""
-			pamageli
+			#do nothing to exit loop
+			ca="q"
 			;;
 		*)
 			echo ${t[err]}
 			sleep 1
 			;;
 		esac
-	
 	done
 }
 
@@ -482,6 +548,7 @@ texts() {
 	t[pkgu]="Type a name or names of packages to update, or leave blank to update distribution : "
 	t[pkgudistcl]="Calculate Linux detected ! Starting cl-update tool !"
 	t[pkgudistgentoo]="Gentoo Linux ! Starting update with emerge"
+	t[pkgusync]="Do you want to sync portage tree and overlays before updating ?"
 	t[pkgudistgentooinfo]="To rebuild modules (kernel, X, PERL, Python), go to Advanced functions."
 
 	t[menupkgs]="${t[menu]} - ${t[s]}"
@@ -491,6 +558,16 @@ texts() {
 	t[pb]="What package files belong to"
 	t[pu]="Show USE flags, and their description"
 	t[pf]="List all files installed by a package"
+
+	t[menupkgpb]="${t[menu]} - ${t[pb]}"
+	t[pkgpb]="Type a filename to know the associated package (blank = return to main menu) : "
+	t[pkgpkerr]="The file doesn't exist !"
+
+	t[menupkgpu]="${t[menu]} - ${t[pu]}"
+	t[pkgpu]="Type a package name to see USE FLAGS and their description (blank = return to main menu) : "
+
+	t[menupkgpf]="${t[menu]} - ${t[pf]}"
+	t[pkgpf]="Type a package name to see files installed by this package (blank = return to main menu) : "
 
 	t[menupkge]="${t[menu]} -  ${t[e]}"
 	t[ek]="What package files belong to"
@@ -542,6 +619,10 @@ load_translations() {
 	then
 		source $path/../share/pamageli/fr.lang
 	fi
+}
+
+dialog() {
+	DIALOGRC="$path/../share/pamageli/dialogrc" /usr/bin/dialog "$@"
 }
 
 check_root() {
