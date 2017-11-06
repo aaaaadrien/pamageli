@@ -7,7 +7,7 @@ e=""
 pkg=""
 l="$LANG"
 emergeopts="-q --quiet-build=y "
-version="0.9.4"
+version="0.9.5"
 declare -A t
 path=`dirname $0`
 
