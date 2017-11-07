@@ -40,6 +40,10 @@ pamageli() {
 		pamageli_update
 		arg=""
 		;;
+	c)
+		pamageli_configuration
+		arg=""
+		;;
 	a)
 		pamageli_advanced_menu
 		arg=""
@@ -54,6 +58,10 @@ pamageli() {
 	while [[ "$c" != "q" ]]
 	do
 		clear
+
+		if [[ ! $TEST ]]
+		then
+
 		echo "${t[menu]}"
 		echo -e "\n"
 		echo "sync - ${t[sync]}"
@@ -64,27 +72,32 @@ pamageli() {
 		echo "p    - ${t[p]}"
 		#echo "     - ${t[e]} (Not implemented yet)"
 		echo "a    - ${t[a]}"
-		#echo "     - ${t[c]} (Not implemented yet)"
+		#echo "c    - ${t[c]}"
 		echo "0    - ${t[0]}"
 		echo -e "\n"
 		echo "q    - ${t[q]}"
 		echo -e "\n"
 		read -p "${t[do]}" c 
 
-		#exec 3>&1;
-		#c=$(dialog --colors --title "${t[menu]}" --nocancel --ok-button "OK" --menu "" 0 0 0 \
-		#	"sync" "${t[sync]}" \
-		#	"i" "${t[i]}" \
-		#	"r" "${t[r]}" \
-		#	"u" "${t[u]}" \
-		#	"s" "${t[s]}" \
-		#	"p" "${t[p]}" \
-		#	"e" "${t[e]}" \
-		#	"a" "${t[a]}" \
-		#	"c" "${t[c]}" \
-		#	"0" "${t[0]}" \
-		#	"q" "${t[q]}" \
-		#  2>&1 1>&3 )
+		else # TEST
+
+		exec 3>&1;
+		c=$(dialog --colors --title "${t[menu]}" --nocancel --ok-button "OK" --menu "" 0 0 0 \
+			"sync" "${t[sync]}" \
+			"i" "${t[i]}" \
+			"r" "${t[r]}" \
+			"u" "${t[u]}" \
+			"s" "${t[s]}" \
+			"p" "${t[p]}" \
+			"e" "${t[e]}" \
+			"a" "${t[a]}" \
+			"c" "${t[c]}" \
+			"0" "${t[0]}" \
+			"q" "${t[q]}" \
+		  2>&1 1>&3 )
+	
+		fi #test
+
 
 		case "$c" in
 
@@ -501,10 +514,21 @@ pamageli_advanced_rebuild_world() {
 }
 
 pamageli_configuration() {
+	check_root c
 	clear
 	echo "${t[menuc]}"
-	echo -e "\n"
-	echo "Not implemented yet"
+	if [[ ! -f ../etc/pamageli/pamageli.conf ]]
+	then
+		cp ../etc/pamageli/pamageli.conf.default ../etc/pamageli/pamageli.conf
+	fi
+
+	echo -e "La configuration actuelle :"
+	confeditor=$(grep EDITOR ../etc/pamageli/pamageli.conf | cut -d= -f2)
+	echo -e "EDITOR : $confeditor"
+	confterm=$(grep TERM ../etc/pamageli/pamageli.conf | cut -d= -f2)
+	echo -e "TERM : $confterm"
+	confeask=$(grep EASK ../etc/pamageli/pamageli.conf | cut -d= -f2)
+	echo -e "EASK : $confeask"
 	echo -e "\n"
 	read -p "${t[retmenu]}" zz
 }
@@ -529,7 +553,7 @@ texts() {
 	t[u]="Update packages"
 	t[s]="Search packages"
 	t[p]="Information about installed packages"
-	t[e]="Edit packages.X files"
+	t[e]="Edit packages.X files and global USE"
 	t[a]="Advanced functions"
 	t[c]="Configure Pamageli options"
 	t[0]="About Pamageli"

@@ -19,105 +19,105 @@ use_shadow = ON
 use_colors = ON
 
 # Screen color
-screen_color = (GREEN,BLACK,ON)
+screen_color = (BLUE,BLACK,ON)
 
 # Shadow color
 shadow_color = (BLACK,BLACK,OFF)
 
 # Dialog box color
-dialog_color = (YELLOW,BLACK,OFF)
+dialog_color = (GREEN,BLACK,OFF)
 
 # Dialog box title color
-title_color = (GREEN,BLACK,OFF)
+title_color = (BLUE,BLACK,OFF)
 
 # Dialog box border color
-border_color = (GREEN,BLACK,ON)
+border_color = (BLUE,BLACK,ON)
 border2_color = border_color
 
 # Active button color
-button_active_color = (GREEN,BLACK,ON)
+button_active_color = (BLUE,BLACK,ON)
 
 # Inactive button color
 button_inactive_color = (RED,BLACK,OFF)
 
 # Active button key color
-button_key_active_color = (BLACK,YELLOW,OFF)
+button_key_active_color = (BLACK,GREEN,OFF)
 
 # Inactive button key color
 button_key_inactive_color = (RED,BLACK,OFF)
 
 # Active button label color
-button_label_active_color = (YELLOW,BLACK,OFF)
+button_label_active_color = (GREEN,BLACK,OFF)
 
 # Inactive button label color
 button_label_inactive_color = (RED,BLACK,ON)
 
 # Input box color
-inputbox_color = (GREEN,BLACK,OFF)
+inputbox_color = (BLUE,BLACK,OFF)
 
 # Input box border color
-inputbox_border_color = (GREEN,BLACK,OFF)
+inputbox_border_color = (BLUE,BLACK,OFF)
 
 # Search box color
-searchbox_color = (GREEN,BLACK,OFF)
+searchbox_color = (BLUE,BLACK,OFF)
 
 # Search box title color
-searchbox_title_color = (BLUE,WHITE,ON)
+searchbox_title_color = (GREEN,WHITE,ON)
 
 # Search box border color
 searchbox_border_color = (WHITE,WHITE,OFF)
 
 # File position indicator color
-position_indicator_color = (GREEN,BLACK,ON)
+position_indicator_color = (BLUE,BLACK,ON)
 
 # Menu box color
 menubox_color = (BLACK,BLACK,OFF)
 
 # Menu box border color
-menubox_border_color = (YELLOW,BLACK,ON)
+menubox_border_color = (GREEN,BLACK,ON)
 menubox_border2_color = menubox_border_color
 
 # Item color
-item_color = (YELLOW,BLACK,OFF)
+item_color = (GREEN,BLACK,OFF)
 
 # Selected item color
-item_selected_color = (GREEN,BLACK,ON)
+item_selected_color = (BLUE,BLACK,ON)
 
 # Tag color
-tag_color = (YELLOW,BLACK,ON)
+tag_color = (GREEN,BLACK,ON)
 
 # Selected tag color
-tag_selected_color = (GREEN,BLACK,ON)
+tag_selected_color = (BLUE,BLACK,ON)
 
 # Tag key color
 tag_key_color = (RED,BLACK,OFF)
 
 # Selected tag key color
-tag_key_selected_color = (BLACK,GREEN,OFF)
+tag_key_selected_color = (BLACK,BLUE,OFF)
 
 # Check box color
-check_color = (YELLOW,BLACK,ON)
+check_color = (GREEN,BLACK,ON)
 
 # Selected check box color
-check_selected_color = (BLACK,YELLOW,OFF)
+check_selected_color = (BLACK,GREEN,OFF)
 
 # Up arrow color
-uarrow_color = (GREEN,BLACK,ON)
+uarrow_color = (BLUE,BLACK,ON)
 
 # Down arrow color
-darrow_color = (GREEN,BLACK,ON)
+darrow_color = (BLUE,BLACK,ON)
 
 # Item help-text color
 itemhelp_color = (WHITE,BLACK,OFF)
 
 # Active form text color
-form_active_text_color = (WHITE,BLUE,ON)
+form_active_text_color = (WHITE,GREEN,ON)
 
 # Form text color
 form_text_color = (WHITE,CYAN,ON)
 
 # Dialog box gauge color
-gauge_color = (YELLOW,BLACK,OFF)
+gauge_color = (GREEN,BLACK,OFF)
 
 # Readonly form item color
 form_item_readonly_color = (CYAN,BLACK,ON)
