@@ -1,8 +1,5 @@
 # Change Editor
 EDITOR=default
 
-# Change term
-TERM=default
-
 # Ask for each action with emerge
 EASK=yes
