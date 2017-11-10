@@ -43,6 +43,10 @@ pamageli() {
 		pamageli_update
 		arg=""
 		;;
+	e)
+		pamageli_edit_files
+		arg=""
+		;;
 	c)
 		pamageli_configuration
 		arg=""
@@ -73,7 +77,7 @@ pamageli() {
 		echo "u    - ${t[u]}"
 		echo "s    - ${t[s]}"
 		echo "p    - ${t[p]}"
-		#echo "     - ${t[e]} (Not implemented yet)"
+		echo "e    - ${t[e]}"
 		echo "a    - ${t[a]}"
 		echo "c    - ${t[c]}"
 		echo "0    - ${t[0]}"
@@ -322,8 +326,9 @@ pamageli_information_packages_files() {
 
 
 pamageli_edit_files() {
-	# $EDITOR
-	while [[ "$c" != "q" ]]
+	check_root e
+	ce=""
+	while [[ "$ce" != "q" ]]
 	do
 		clear
 		echo "${t[menupkge]}"
@@ -331,16 +336,24 @@ pamageli_edit_files() {
 		echo "k   - ${t[ek]}"
 		echo "u   - ${t[eu]}"
 		echo "m   - ${t[em]}"
+		echo "um   - ${t[eum]}"
 		echo -e "\n"
 		echo "q   - ${t[eq]}"
 		echo -e "\n"
-		read -p "${t[do]}" c 
+		read -p "${t[do]}" ce
 
-		case "$c" in
+		case "$ce" in
 
 		k)
-			echo "Not implemented yet !"
-			sleep 1
+			if [[ -f /etc/portage/package.keywords ]]
+			then
+				$EDITOR /etc/portage/package.keywords
+			else
+				if [[ -d /etc/portage/package.keywords ]]
+				then
+					$EDITOR /etc/portage/package.keywords/custom
+				fi
+			fi
 			;;
 		u)
 			echo "Not implemented yet !"
@@ -350,9 +363,12 @@ pamageli_edit_files() {
 			echo "Not implemented yet !"
 			sleep 1
 			;;
+		um)
+			echo "Not implemented yet !"
+			sleep 1
+			;;
 		q)
-			c=""
-			pamageli
+			ce="q"
 			;;
 		*)
 			echo ${t[err]]}
@@ -530,19 +546,19 @@ pamageli_configuration() {
 			cp ../etc/pamageli/pamageli.conf.default ../etc/pamageli/pamageli.conf
 		fi
 
-		echo -e "La configuration actuelle (dans le fichier) :"
+		echo -e "${t[cconffile]}"
 		confeditor=$(grep EDITOR ../etc/pamageli/pamageli.conf | cut -d= -f2)
 		echo -e "EDITOR : $confeditor"
 		confeask=$(grep EASK ../etc/pamageli/pamageli.conf | cut -d= -f2)
 		echo -e "EASK : $confeask"
 		echo -e "\n"
 
-		echo -e "La configuration actuelle (chargée dans le programme) :"
+		echo -e "${t[cconffile]}"
 		echo -e "EDITOR : $EDITOR"
 		echo -e "EASK : $EASK"
 		echo -e "\n"
         
-		read -p "To change an option, please set OPTION=value (type q to quit) : " option
+		read -p "${t[creadoption]}" option
 		
 		if [[ "$option" == "q" ]]
 		then
@@ -554,9 +570,8 @@ pamageli_configuration() {
 				if [[ -e $(which $value 2>/dev/null ) || $value == "default" ]]
 				then
 					sed -e "s/EDITOR=$confeditor/EDITOR=$value/" -i ../etc/pamageli/pamageli.conf
-					echo "EDITOR $value defined"
 				else
-					echo "The program $value doesn't exist"
+					echo -e "${t[ceditorerror]} $value"
 					sleep 1
 				fi
 			fi
@@ -567,9 +582,8 @@ pamageli_configuration() {
 				if [[ "$value" == "yes" || $value == "no" ]]
 				then
 					sed -e "s/EASK=$confeask/EASK=$value/" -i ../etc/pamageli/pamageli.conf
-					echo "EASK $value defined"
 				else
-					echo "The EASK value is 'yes' or 'no'"
+					echo -e "${t[ceaskerror]}"
 					sleep 1
 				fi
 			fi
@@ -640,9 +654,10 @@ texts() {
 	t[pkgpf]="Type a package name to see files installed by this package (blank = return to main menu) : "
 
 	t[menupkge]="${t[menu]} -  ${t[e]}"
-	t[ek]="What package files belong to"
-	t[eu]="Show USE flags, and their description"
-	t[em]="List all files installed by a package"
+	t[ek]="Edit package.keywords file"
+	t[eu]="Edit package.use file"
+	t[em]="Edit package.mask file"
+	t[eum]="Edit package.unmask file"
 	t[eq]="Return to main menu."
 
 	t[menupkga]="${t[menu]} -  ${t[a]}"
@@ -673,6 +688,11 @@ texts() {
 	t[menuarw]="${t[menu]} -  ${t[arw]}"
 
 	t[menuc]="${t[menu]} -  ${t[c]}"
+	t[cconffile]="Configuration (in the .conf file) :"
+	t[cconfrunning]="Actual configuration (loaded in the program) :"
+	t[creadoption]="To change an option, please set OPTION=value (type q to quit) : "
+	t[ceditorerror]="The program doesn't exist :"
+	t[ceaskerror]="The EASK value is 'yes' or 'no'"
 
 	t[menu0]="${t[menu]} - ${t[0]}"
 	t[0txt]=" Pamageli $version \n PAckage MAnager for GEntoo LInux \n Written by Adrien.D."

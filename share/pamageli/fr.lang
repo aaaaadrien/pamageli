@@ -31,6 +31,28 @@ t[pkgudistgentooinfo]="Pour recompiler les modules (kernel, X, PERL, Python), al
 t[menupkgs]="${t[menu]} - ${t[s]}"
 t[pkgs]="Saisir le(s) nom(s) des paquets à rechercher (vide = revenir au menu précédent) : "
 
+t[menupkgp]="${t[menu]} - ${t[p]}"
+t[pb]="A que paquet correspond ce fichier"
+t[pu]="Voir les USE flags et leur description"
+t[pf]="Lister tous les fichiers installés par un paquet"
+
+t[menupkgpb]="${t[menu]} - ${t[pb]}"
+t[pkgpb]="Saisir un nom de fichier pour connaitre le paquet associé (vide = revenir au menu précédent) : "
+t[pkgpkerr]="Le fichier n'existe pas"
+
+t[menupkgpu]="${t[menu]} - ${t[pu]}"
+t[pkgpu]="Saisir un nom de paquet pour voir ses USE flags et leur description (vide = revenir au menu précédent) : "
+
+t[menupkgpf]="${t[menu]} - ${t[pf]}"
+t[pkgpf]="Saisir un nom de paquet pour voir les fichiers installés par celui-ci (vide = revenir au menu précédent) : "
+
+t[menupkge]="${t[menu]} -  ${t[e]}"
+t[ek]="Editer le fichier package.keywords"
+t[eu]="Editer le fichier package.use"
+t[em]="Editer le fichier package.mask"
+t[eum]="Editer le fichier package.unmask"
+t[eq]="Return to main menu."
+
 t[menupkga]="${t[menu]} -  ${t[a]}"
 t[ax]="Recompiler les modules X11"
 t[ak]="Recompiler les modules kernel"
@@ -45,6 +67,11 @@ t[arg]="Recompiler les paquets qui utilisent des bibliothèques GCC"
 t[aq]="Revenir au menu principal."
 
 t[menuc]="${t[menu]} -  ${t[c]}"
+t[cconffile]="Configuration (du fichier .conf) :"
+t[cconfrunning]="Configuration actuelle (chargée dans le programme) :"
+t[creadoption]="Pour changer une option, saisir OPTION=valeur (q pour quitter) : "
+t[ceditorerror]="Le programme n'existe pas :"
+t[ceaskerror]="La valeur EASK doit être 'yes' ou 'no'"
 
 t[menu0]="${t[menu]} - ${t[?]}"
 t[0txt]=" Pamageli $version \n PAckage MAnager for GEntoo LInux \n Ecrit par Adrien.D."
