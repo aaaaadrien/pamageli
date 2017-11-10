@@ -356,16 +356,37 @@ pamageli_edit_files() {
 			fi
 			;;
 		u)
-			echo "Not implemented yet !"
-			sleep 1
+			if [[ -f /etc/portage/package.use ]]
+			then
+				$EDITOR /etc/portage/package.use
+			else
+				if [[ -d /etc/portage/package.use ]]
+				then
+					$EDITOR /etc/portage/package.use/custom
+				fi
+			fi
 			;;
 		m)
-			echo "Not implemented yet !"
-			sleep 1
+			if [[ -f /etc/portage/package.mask ]]
+			then
+				$EDITOR /etc/portage/package.mask
+			else
+				if [[ -d /etc/portage/package.mask ]]
+				then
+					$EDITOR /etc/portage/package.mask/custom
+				fi
+			fi
 			;;
 		um)
-			echo "Not implemented yet !"
-			sleep 1
+			if [[ -f /etc/portage/package.unmask ]]
+			then
+				$EDITOR /etc/portage/package.unmask
+			else
+				if [[ -d /etc/portage/package.unmask ]]
+				then
+					$EDITOR /etc/portage/package.unmask/custom
+				fi
+			fi
 			;;
 		q)
 			ce="q"
