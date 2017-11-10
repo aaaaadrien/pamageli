@@ -336,7 +336,7 @@ pamageli_edit_files() {
 		echo "k   - ${t[ek]}"
 		echo "u   - ${t[eu]}"
 		echo "m   - ${t[em]}"
-		echo "um   - ${t[eum]}"
+		echo "um  - ${t[eum]}"
 		echo -e "\n"
 		echo "q   - ${t[eq]}"
 		echo -e "\n"
@@ -562,19 +562,19 @@ pamageli_configuration() {
     do
 		clear
 		echo "${t[menuc]}"
-		if [[ ! -f ../etc/pamageli/pamageli.conf ]]
+		if [[ ! -f ../../etc/pamageli/pamageli.conf ]]
 		then
-			cp ../etc/pamageli/pamageli.conf.default ../etc/pamageli/pamageli.conf
+			cp ../../etc/pamageli/pamageli.conf.default ../../etc/pamageli/pamageli.conf
 		fi
 
 		echo -e "${t[cconffile]}"
-		confeditor=$(grep EDITOR ../etc/pamageli/pamageli.conf | cut -d= -f2)
+		confeditor=$(grep EDITOR ../../etc/pamageli/pamageli.conf | cut -d= -f2)
 		echo -e "EDITOR : $confeditor"
-		confeask=$(grep EASK ../etc/pamageli/pamageli.conf | cut -d= -f2)
+		confeask=$(grep EASK ../../etc/pamageli/pamageli.conf | cut -d= -f2)
 		echo -e "EASK : $confeask"
 		echo -e "\n"
 
-		echo -e "${t[cconffile]}"
+		echo -e "${t[cconfrunning]}"
 		echo -e "EDITOR : $EDITOR"
 		echo -e "EASK : $EASK"
 		echo -e "\n"
@@ -590,7 +590,8 @@ pamageli_configuration() {
 				value=$(echo $option | sed -e "s/EDITOR=//")
 				if [[ -e $(which $value 2>/dev/null ) || $value == "default" ]]
 				then
-					sed -e "s/EDITOR=$confeditor/EDITOR=$value/" -i ../etc/pamageli/pamageli.conf
+					sed -e "s/EDITOR=$confeditor/EDITOR=$value/" -i ../../etc/pamageli/pamageli.conf
+					EDITOR=$value
 				else
 					echo -e "${t[ceditorerror]} $value"
 					sleep 1
@@ -602,7 +603,8 @@ pamageli_configuration() {
 				value=$(echo $option | sed -e "s/EASK=//")
 				if [[ "$value" == "yes" || $value == "no" ]]
 				then
-					sed -e "s/EASK=$confeask/EASK=$value/" -i ../etc/pamageli/pamageli.conf
+					sed -e "s/EASK=$confeask/EASK=$value/" -i ../../etc/pamageli/pamageli.conf
+					EASK=$value
 				else
 					echo -e "${t[ceaskerror]}"
 					sleep 1
@@ -749,10 +751,10 @@ check_root() {
 
 load_config() {
 
-	if [[ -f ../etc/pamageli/pamageli.conf ]]
+	if [[ -f ../../etc/pamageli/pamageli.conf ]]
 	then
-		EDITOR=$(grep EDITOR ../etc/pamageli/pamageli.conf | cut -d= -f2)
-		EASK=$(grep EASK ../etc/pamageli/pamageli.conf | cut -d= -f2)
+		EDITOR=$(grep EDITOR ../../etc/pamageli/pamageli.conf | cut -d= -f2)
+		EASK=$(grep EASK ../../etc/pamageli/pamageli.conf | cut -d= -f2)
 	else
 		EDITOR=""
 		EASK=""
