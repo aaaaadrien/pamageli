@@ -19,6 +19,9 @@ pamageli() {
 	# Chargement des textes
 	texts
 
+	# Chargement de la config
+	load_config
+
 	# On vérifie si on est root (A désactiver)
 	#check_root
 	
@@ -527,11 +530,16 @@ pamageli_configuration() {
 			cp ../etc/pamageli/pamageli.conf.default ../etc/pamageli/pamageli.conf
 		fi
 
-		echo -e "La configuration actuelle :"
+		echo -e "La configuration actuelle (dans le fichier) :"
 		confeditor=$(grep EDITOR ../etc/pamageli/pamageli.conf | cut -d= -f2)
 		echo -e "EDITOR : $confeditor"
 		confeask=$(grep EASK ../etc/pamageli/pamageli.conf | cut -d= -f2)
 		echo -e "EASK : $confeask"
+		echo -e "\n"
+
+		echo -e "La configuration actuelle (chargée dans le programme) :"
+		echo -e "EDITOR : $EDITOR"
+		echo -e "EASK : $EASK"
 		echo -e "\n"
         
 		read -p "To change an option, please set OPTION=value (type q to quit) : " option
@@ -696,6 +704,38 @@ check_root() {
 		su -c "$path/pamageli $arg"
 		exit 0;
 	fi
+}
+
+load_config() {
+
+	if [[ -f ../etc/pamageli/pamageli.conf ]]
+	then
+		EDITOR=$(grep EDITOR ../etc/pamageli/pamageli.conf | cut -d= -f2)
+		EASK=$(grep EASK ../etc/pamageli/pamageli.conf | cut -d= -f2)
+	else
+		EDITOR=""
+		EASK=""
+	fi
+
+	if [[ ! -e $(which $EDITOR 2>/dev/null ) || "$EDITOR" == "default" ]]
+	then
+			if [[ -e /usr/bin/nano ]]
+			then
+				EDITOR=nano
+			fi
+
+			if [[ -e /usr/bin/vi ]]
+			then
+				EDITOR=vi
+			fi
+
+	fi
+	
+	if [[ "$EASK" != "yes" || "$EASK" != "no" ]]
+	then
+		EASK=yes
+	fi
+
 }
 
 # Fin Fonctions #
